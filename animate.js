@@ -33,6 +33,7 @@ var ballMaker = function() {
 	if (ypos >= c.height-radius || ypos <= radius) {
 	    ychange *= -1;
 	}
+	console.log(xchange);
 	xpos += xchange;
 	ypos += ychange;
 	ctx.beginPath();
@@ -106,6 +107,15 @@ var clearBall = function() {
     ballArray = [];
 };
 
+var slowOne = function(n) {
+    n = n * 0.8;
+};
+
+var slow = function() {
+    // ballArray = ballArray.map(function(e){e.xchange *= 0.8});
+    ballArray.map(slowOne(e.xchange));
+};
+
 bbutton = document.getElementById("add1");
 bbutton.addEventListener("click", add1Ball);
 
@@ -120,5 +130,8 @@ dbutton.addEventListener("click", removeBall);
 
 cbutton = document.getElementById("clear");
 cbutton.addEventListener("click", clearBall);
+
+cbutton = document.getElementById("slow");
+cbutton.addEventListener("slow", slow);
 
 window.requestAnimationFrame(moveAll);
