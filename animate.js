@@ -2,10 +2,11 @@ var c = document.getElementById("slate");
 var ctx = c.getContext("2d");
 var ballArray = [];
 var possibleColors = ["red", "green", "blue", "yellow", "orange", "purple"];
+var possibleColors2 = ["#e6ffee", "#ccffdd", "#b3ffcc", "#99ffbb", "#80ffaa", "#66ff99", "#4dff88", "#33ff77", "#1aff66", "#00ff55", "#00e64d", "#00cc44", "#00b33c", "#009933", "#00802b", "#006622", "#004d1a"];
 
 var getColor = function() {
-    index = Math.floor(Math.random()*possibleColors.length);
-    return possibleColors[index];
+    index = Math.floor(Math.random()*possibleColors2.length);
+    return possibleColors2[index];
 };
 
 
