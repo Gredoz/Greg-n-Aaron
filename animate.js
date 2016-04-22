@@ -9,16 +9,24 @@ var getColor = function() {
     return possibleColors2[index];
 };
 
+var getSpeed = function() {
+    change = Math.floor(Math.random()*10)-5;
+    if (change == 0) {
+	change += 1;
+    };
+    return change;
+};
 
 var ballMaker = function() {
     var xpos = Math.floor(Math.random()*(c.width-100))+50;
     var ypos = Math.floor(Math.random()*(c.height-100))+50;
-    var xchange = Math.floor(Math.random()*10)-5;
-    var ychange = Math.floor(Math.random()*10)-5;
+    var xchange = getSpeed();
+    var ychange = getSpeed();
     var radius = Math.floor(Math.random()*30)+10;
     var color = getColor();
 
     var move = function() {
+
 	if (xpos >= c.width-radius || xpos <= radius) {
 	    xchange *= -1;
 	}
@@ -42,6 +50,22 @@ var ballMaker = function() {
 	radius:radius,
 	color:color,
 	move:move
+    };
+};
+
+var collide = function() {
+    for (i = 0; i < ballArray.length - 1; i++) {
+	for (j = i + 1; j < ballArray.length; j++) {
+	    dx = ballArray[i].xpos - ballArray[j].xpos;
+	    dy = ballArray[i].ypos - ballArray[j].ypos;
+	    dist = Math.sqrt( (dx*dx) + (dy*dy) );
+	    if (dist <= (ballArray[i].radius + ballArray[j].radius)) {
+		ballArray[i].xchange *= -1;
+		ballArray[i].ychange *= -1;
+		ballArray[j].xchange *= -1;
+		ballArray[j].ychange *= -1;
+	    };
+	};
     };
 };
 
