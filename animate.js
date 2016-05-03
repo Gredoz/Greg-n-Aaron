@@ -25,6 +25,16 @@ var ballMaker = function() {
     var radius = Math.floor(Math.random()*30)+10;
     var color = getColor();
 
+    var setxchange = function(n){
+	//console.log(xchange);
+	xchange = n;
+	//console.log(xchange);
+    }
+
+    var setychange = function(n){
+	ychange = n;
+    }
+
     var move = function() {
 
 	if (xpos >= c.width-radius || xpos <= radius) {
@@ -33,7 +43,7 @@ var ballMaker = function() {
 	if (ypos >= c.height-radius || ypos <= radius) {
 	    ychange *= -1;
 	}
-	console.log(xchange);
+	//console.log(xchange);
 	xpos += xchange;
 	ypos += ychange;
 	ctx.beginPath();
@@ -48,6 +58,8 @@ var ballMaker = function() {
 	ypos:ypos,
 	xchange:xchange,
 	ychange:ychange,
+	setxchange:setxchange,
+	setychange:setychange,
 	radius:radius,
 	color:color,
 	move:move
@@ -107,31 +119,45 @@ var clearBall = function() {
     ballArray = [];
 };
 
-var slowOne = function(n) {
-    n = n * 0.8;
+var flock = function(){
+    //console.log('flock');
+    ballArray.map(function(ball){
+        ball.setxchange(2);
+	ball.setychange(2);
+        return ball;
+    });
+}
+
+var filterS = function(){
+    //console.log('filtering');
+    ballArray.filter(function(ball){
+	//console.log(ball.radius);
+	return ball.radius < 20;
+    }).map(function(ball){
+	ball.setxchange(0);
+	ball.setychange(0);
+    });
 };
 
-var slow = function() {
-    // ballArray = ballArray.map(function(e){e.xchange *= 0.8});
-    ballArray.map(slowOne(e.xchange));
-};
+b1button = document.getElementById("add1");
+b1button.addEventListener("click", add1Ball);
 
-bbutton = document.getElementById("add1");
-bbutton.addEventListener("click", add1Ball);
+b5button = document.getElementById("add5");
+b5button.addEventListener("click", add5Ball);
 
-bbutton = document.getElementById("add5");
-bbutton.addEventListener("click", add5Ball);
+b10button = document.getElementById("add10");
+b10button.addEventListener("click", add10Ball);
 
-bbutton = document.getElementById("add10");
-bbutton.addEventListener("click", add10Ball);
-
-dbutton = document.getElementById("remove");
-dbutton.addEventListener("click", removeBall);
+rbutton = document.getElementById("remove");
+rbutton.addEventListener("click", removeBall);
 
 cbutton = document.getElementById("clear");
 cbutton.addEventListener("click", clearBall);
 
-cbutton = document.getElementById("slow");
-cbutton.addEventListener("slow", slow);
+fbutton = document.getElementById("flock");
+fbutton.addEventListener("click", flock);
+
+lbutton = document.getElementById("filter");
+lbutton.addEventListener("click", filterS);
 
 window.requestAnimationFrame(moveAll);
